@@ -6,6 +6,7 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 - How to add plugins
 - How to split your code into chunks
 - How to setup a dev server
+
 ## Requirements
 - All of your code will be executed on Ubuntu 18.04 LTS using Node 12.x.x
 - Allowed editors: vi, vim, emacs, Visual Studio Code
