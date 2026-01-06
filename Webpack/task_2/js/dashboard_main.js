@@ -1,4 +1,4 @@
-import '../css/main.css';
+require('../css/main.css');
 
 const $ = require("jquery");
 const _ = require("lodash");
