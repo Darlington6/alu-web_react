@@ -1,0 +1,19 @@
+name: Deploy Dashboard to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # or default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy dashboard folder
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./task_3/dashboard   # path to dashboard folder
