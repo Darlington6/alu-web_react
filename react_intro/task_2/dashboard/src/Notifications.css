@@ -1,0 +1,9 @@
+.Notifications {
+  border: 2px dashed #e0354b;
+  padding: 20px;
+  margin: 10px;
+}
+
+.Notifications p {
+  margin: 0;
+}
