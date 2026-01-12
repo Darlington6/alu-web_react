@@ -1,68 +1,47 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  mode: "development",
+  devtool: "inline-source-map",
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, '../dist'),
+    filename: "bundle.js",
+    path: path.resolve("./dist"),
   },
-  devtool: 'inline-source-map',
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, '../dist'),
-    },
     hot: true,
-    port: 8564,
+    contentBase: path.resolve("./dist"),
     compress: true,
+    port: 8564,
+  },
+  performance: {
+    maxAssetSize: 1000000,
+    maxEntrypointSize: 1000000,
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,   // handle JS and JSX files
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',   // transpile modern JS
-              '@babel/preset-react'  // transpile JSX
-            ]
-          }
-        }
+        loader: "babel-loader",
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
-          'file-loader',
+          "file-loader",
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65,
-              },
-              optipng: {
-                enabled: false,
-              },
-              pngquant: {
-                quality: [0.65, 0.90],
-                speed: 4,
-              },
-              gifsicle: {
-                interlaced: false,
-              },
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
             },
           },
         ],
       },
     ],
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'], // allow imports without specifying extension
   },
 };
