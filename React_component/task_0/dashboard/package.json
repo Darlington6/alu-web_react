@@ -5,9 +5,9 @@
   "main": "./src/index.js",
   "jest": {
     "testEnvironment": "jsdom",
-    "forceExit": true,
     "maxWorkers": 1,
     "testTimeout": 5000,
+    "bail": 1,
     "setupFiles": [
       "<rootDir>/config/setupTests.js"
     ],
@@ -23,7 +23,7 @@
     "build": "webpack --config ./config/webpack.config.js",
     "start-dev": "webpack serve -c ./config/webpack.config.js --open",
     "start": "webpack serve -c ./config/webpack.config.js --open",
-    "test": "jest",
+    "test": "jest --forceExit",
     "dev": "npm run start-dev -- --env mode=development",
     "prod": "npm run start-dev -- --env mode=production"
   },
