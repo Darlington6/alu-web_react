@@ -4,7 +4,8 @@
   "description": "task 5 of 0x02-react intro",
   "main": "./src/index.js",
   "jest": {
-    "setupFilesAfterEnv": [
+    "testEnvironment": "jsdom",
+    "setupFiles": [
       "<rootDir>/config/setupTests.js"
     ],
     "moduleNameMapper": {
@@ -32,6 +33,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "cheerio": "^1.0.0-rc.12",
     "css-loader": "^6.5.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
