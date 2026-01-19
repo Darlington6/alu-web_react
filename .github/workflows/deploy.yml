@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths: 
+      - 'react_intro/task_3/dashboard/**'
 
 jobs:
   build-and-deploy:
