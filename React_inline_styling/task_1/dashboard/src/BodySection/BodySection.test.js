@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { StyleSheetTestUtils } from 'aphrodite';
 import BodySection from './BodySection';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('<BodySection />', () => {
     it('renders a BodySection component', () => {
@@ -10,7 +13,7 @@ describe('<BodySection />', () => {
 
     it('renders a div with className bodySection', () => {
         const wrapper = shallow(<BodySection title="test" />);
-        expect(wrapper.find('div.bodySection')).toHaveLength(1);
+        expect(wrapper.find('div')).toHaveLength(1);
     });
 
     it('renders an h2 with the title prop', () => {
@@ -49,12 +52,10 @@ describe('<BodySection />', () => {
     it('renders h2 and children text as expected', () => {
         const wrapper = shallow(
             <BodySection title="test title">
-                <p>test children node</p>
+                <p>test content</p>
             </BodySection>
         );
-        expect(wrapper.find('h2')).toHaveLength(1);
         expect(wrapper.find('h2').text()).toEqual('test title');
-        expect(wrapper.find('p')).toHaveLength(1);
-        expect(wrapper.find('p').text()).toEqual('test children node');
+        expect(wrapper.find('p').text()).toEqual('test content');
     });
 });
