@@ -52,7 +52,7 @@ class App extends React.Component {
     return (
       <>
         <Notifications displayDrawer={ false } listNotifications={ listNotifications } />
-        <div className={css(styles.app)}>
+        <div className={css(styles.body)}>
           <Header />
           { isLoggedIn ? (
             <BodySectionWithMarginBottom title="Course list">
@@ -74,10 +74,13 @@ class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  app: {
+  body: {
     margin: 0,
     padding: 0,
     boxSizing: 'border-box',
+  },
+  footer: {
+    // Footer styles
   },
 });
 

@@ -4,7 +4,7 @@ import { StyleSheet, css } from 'aphrodite';
 
 function Header() {
     return (
-        <div className={css(styles.appHeader)}>
+        <div className={css(styles.header)}>
             <img src={ logo } alt="Holberton Logo: Red Seahorse" className={css(styles.logo)} />
             <h1 className={css(styles.title)}>School dashboard</h1>
         </div>
@@ -12,7 +12,7 @@ function Header() {
 }
 
 const styles = StyleSheet.create({
-    appHeader: {
+    header: {
         backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
