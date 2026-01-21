@@ -74,4 +74,26 @@ describe('<Notifications />', () => {
         expect(spy).toHaveBeenCalledWith('Notification 42 has been marked as read');
         spy.mockRestore();
     });
+
+    it('does not rerender when updating the props with the same list', () => {
+        const wrapper = shallow(<Notifications displayDrawer={ true } listNotifications={ listNotifications } />);
+        const shouldUpdate = wrapper.instance().shouldComponentUpdate({ 
+            displayDrawer: true, 
+            listNotifications: listNotifications 
+        });
+        expect(shouldUpdate).toBe(false);
+    });
+
+    it('does rerender when updating the props with a longer list', () => {
+        const wrapper = shallow(<Notifications displayDrawer={ true } listNotifications={ listNotifications } />);
+        const longerList = [
+            ...listNotifications,
+            { id: 4, type: 'default', value: 'New notification' }
+        ];
+        const shouldUpdate = wrapper.instance().shouldComponentUpdate({ 
+            displayDrawer: true, 
+            listNotifications: longerList 
+        });
+        expect(shouldUpdate).toBe(true);
+    });
 });
