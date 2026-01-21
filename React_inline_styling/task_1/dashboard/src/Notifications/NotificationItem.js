@@ -1,6 +1,6 @@
 import React from 'react';
-import './Notifications.css';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 class NotificationItem extends React.PureComponent {
     render() {
@@ -12,6 +12,7 @@ class NotificationItem extends React.PureComponent {
                     data-notification-type={ type }
                     dangerouslySetInnerHTML={ html }
                     onClick={ () => markAsRead(id) }
+                    className={css(type === 'urgent' ? styles.urgent : styles.default)}
                 />
             );
         }
@@ -20,10 +21,22 @@ class NotificationItem extends React.PureComponent {
             <li
                 data-notification-type={ type }
                 onClick={ () => markAsRead(id) }
+                className={css(type === 'urgent' ? styles.urgent : styles.default)}
             >{ value }</li>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    default: {
+        color: 'blue',
+        listStyleType: 'disc',
+    },
+    urgent: {
+        color: 'red',
+        listStyleType: 'disc',
+    },
+});
 
 NotificationItem.propTypes = {
     id: PropTypes.number,

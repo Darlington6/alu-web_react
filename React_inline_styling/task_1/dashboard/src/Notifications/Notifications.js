@@ -1,5 +1,4 @@
 import React from 'react';
-import './Notifications.css';
 import close_icon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
@@ -69,9 +68,11 @@ const styles = StyleSheet.create({
     notifications: {
         border: '2px dashed #FF0000',
         padding: '24px',
+        position: 'relative',
     },
     notificationsList: {
-        listStyleType: 'none',
+        listStyleType: 'disc',
+        paddingLeft: '20px',
     },
     menuItem: {
         position: 'absolute',

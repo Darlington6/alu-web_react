@@ -48,7 +48,8 @@ describe('<Notifications />', () => {
 
     it('verifies that the first NotificationItem element renders the html', () => {
         const wrapper = shallow(<Notifications displayDrawer={ true } listNotifications={ listNotifications } />);
-        expect(wrapper.html()).toContain('<li data-notification-type="default">New course available</li>');
+        const firstItem = wrapper.find(NotificationItem).first();
+        expect(firstItem.props().value).toEqual('New course available');
     });
 
     it('verifies that Notifications renders correctly if you pass an empty array or without the listNotifications prop', () => {
