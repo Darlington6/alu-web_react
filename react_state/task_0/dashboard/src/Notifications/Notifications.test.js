@@ -106,7 +106,7 @@ describe('<Notifications />', () => {
 
     it('verifies clicking on the close button calls handleHideDrawer', () => {
         const handleHideDrawerMock = jest.fn();
-        const wrapper = shallow(<Notifications displayDrawer={ true } handleHideDrawer={ handleHideDrawerMock } />);
+        const wrapper = shallow(<Notifications displayDrawer={ true } handleHideDrawer={ handleHideDrawerMock } listNotifications={ listNotifications } />);
         wrapper.find('button').simulate('click');
         expect(handleHideDrawerMock).toHaveBeenCalled();
     });
