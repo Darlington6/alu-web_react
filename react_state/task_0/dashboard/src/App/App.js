@@ -48,7 +48,8 @@ class App extends React.Component {
 
   render() {
   
-    const { isLoggedIn } = this.props;
+  const { isLoggedIn } = this.props;
+  const { displayDrawer } = this.state;
 
     const listCourses = [
       { id: 1, name: 'ES6', credit: 60 },
@@ -64,9 +65,9 @@ class App extends React.Component {
 
     return (
       <>
-        <Notifications displayDrawer={ this.state.displayDrawer } listNotifications={ listNotifications }
-                       handleDisplayDrawer={ this.handleDisplayDrawer }
-                       handleHideDrawer={ this.handleHideDrawer } />
+        <Notifications displayDrawer={ displayDrawer } listNotifications={ listNotifications }
+                 handleDisplayDrawer={ this.handleDisplayDrawer }
+                 handleHideDrawer={ this.handleHideDrawer } />
         <div className="App">
           <Header />
           { isLoggedIn ? (

@@ -100,11 +100,10 @@ describe('<App />', () => {
 
     it('verifies that default displayDrawer state is false and can be toggled', () => {
         const wrapper = shallow(<App />);
-        const instance = wrapper.instance();
         expect(wrapper.state().displayDrawer).toBe(false);
-        instance.handleDisplayDrawer();
+        wrapper.instance().handleDisplayDrawer();
         expect(wrapper.state().displayDrawer).toBe(true);
-        instance.handleHideDrawer();
+        wrapper.instance().handleHideDrawer();
         expect(wrapper.state().displayDrawer).toBe(false);
     });
 });

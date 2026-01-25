@@ -23,7 +23,7 @@ class Notifications extends React.Component {
         const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer } = this.props;
         return (
             <>
-            <div className="menuItem" onClick={ () => { handleDisplayDrawer(); } }>
+            <div className="menuItem" onClick={ handleDisplayDrawer }>
                 Your notifications
             </div>
             {displayDrawer &&
@@ -32,7 +32,7 @@ class Notifications extends React.Component {
                     <>
                         <button
                             aria-label="Close"
-                            onClick={ () => { handleHideDrawer(); } }
+                            onClick={ handleHideDrawer }
                         ><img
                                 src={ close_icon }
                                 alt="Close"
