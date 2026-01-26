@@ -9,7 +9,6 @@ export const map = Map({
   6: 'Lucas',
 });
 
-export const map2 = map.withMutations(function () {
-  // use arguments to avoid introducing new variable names
-  arguments[0].set('2', 'Benjamin').set('4', 'Oliver');
-});
+export const map2 = map.withMutations((map) =>
+  map.set('2', 'Benjamin').set('4', 'Oliver')
+);
