@@ -12,6 +12,10 @@ import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from '../utils/utils';
 import AppContext, { defaultUser, defaultLogOut } from './AppContext';
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer
+} from '../actions/uiActionCreators';
 
 class App extends React.Component {
   constructor(props) {
@@ -83,7 +87,12 @@ class App extends React.Component {
 
   render() {
     const { user, listNotifications } = this.state;
-    const { isLoggedIn, displayDrawer } = this.props;
+    const {
+      isLoggedIn,
+      displayDrawer,
+      displayNotificationDrawer,
+      hideNotificationDrawer
+    } = this.props;
     const contextValue = {
       user: user,
       logOut: this.logOut,
@@ -101,8 +110,8 @@ class App extends React.Component {
           <Notifications 
             displayDrawer={ displayDrawer } 
             listNotifications={ listNotifications }
-            handleDisplayDrawer={ this.handleDisplayDrawer }
-            handleHideDrawer={ this.handleHideDrawer }
+            handleDisplayDrawer={ displayNotificationDrawer }
+            handleHideDrawer={ hideNotificationDrawer }
             markNotificationAsRead={ this.markNotificationAsRead }
           />
           <div className="App">
@@ -132,4 +141,6 @@ export const mapStateToProps = (state) => ({
   displayDrawer: state.uiReducer.isNotificationDrawerVisible
 });
 
-export default hot(module)(connect(mapStateToProps)(App));
+export default hot(
+  module
+)(connect(mapStateToProps, { displayNotificationDrawer, hideNotificationDrawer })(App));
