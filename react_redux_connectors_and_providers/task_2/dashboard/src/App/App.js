@@ -15,7 +15,8 @@ import { getLatestNotification } from '../utils/utils';
 import AppContext, { defaultUser, defaultLogOut } from './AppContext';
 import {
   displayNotificationDrawer,
-  hideNotificationDrawer
+  hideNotificationDrawer,
+  loginRequest
 } from '../actions/uiActionCreators';
 
 class App extends React.Component {
@@ -24,7 +25,6 @@ class App extends React.Component {
     const htmlObj = getLatestNotification();
     this.state = {
       user: defaultUser,
-      logOut: this.logOut.bind(this),
       listNotifications: [
         { id: 1, type: 'default', value: 'New course available' },
         { id: 2, type: 'urgent', value: 'New course available' },
@@ -32,7 +32,6 @@ class App extends React.Component {
       ],
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
@@ -47,24 +46,8 @@ class App extends React.Component {
   handleKeyDown(event) {
     if (event.ctrlKey && event.key === 'h') {
       alert('Logging you out');
-      this.state.logOut();
+      defaultLogOut();
     }
-  }
-
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email,
-        password,
-        isLoggedIn: true,
-      },
-    });
-  }
-
-  logOut() {
-    this.setState({
-      user: defaultUser,
-    });
   }
 
   markNotificationAsRead(id) {
@@ -81,11 +64,12 @@ class App extends React.Component {
       isLoggedIn,
       displayDrawer,
       displayNotificationDrawer,
-      hideNotificationDrawer
+      hideNotificationDrawer,
+      login
     } = this.props;
     const contextValue = {
       user: user,
-      logOut: this.logOut,
+      logOut: defaultLogOut,
     };
 
     const listCourses = [
@@ -112,7 +96,7 @@ class App extends React.Component {
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={ this.logIn } />
+                <Login logIn={ login } />
               </BodySectionWithMarginBottom>
             ) }
             <BodySection title="News from the School">
@@ -135,16 +119,24 @@ App.propTypes = {
   isLoggedIn: PropTypes.bool,
   displayDrawer: PropTypes.bool,
   displayNotificationDrawer: PropTypes.func,
-  hideNotificationDrawer: PropTypes.func
+  hideNotificationDrawer: PropTypes.func,
+  login: PropTypes.func
 };
 
 App.defaultProps = {
   isLoggedIn: false,
   displayDrawer: false,
   displayNotificationDrawer: () => {},
-  hideNotificationDrawer: () => {}
+  hideNotificationDrawer: () => {},
+  login: () => {}
 };
 
 export default hot(
   module
-)(connect(mapStateToProps, { displayNotificationDrawer, hideNotificationDrawer })(App));
+)(
+  connect(mapStateToProps, {
+    displayNotificationDrawer,
+    hideNotificationDrawer,
+    login: loginRequest
+  })(App)
+);
