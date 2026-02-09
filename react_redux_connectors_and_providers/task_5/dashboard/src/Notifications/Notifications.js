@@ -4,8 +4,15 @@ import close_icon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
+import { connect } from 'react-redux';
+import { fetchNotifications } from '../actions/notificationActionCreators';
 
-class Notifications extends React.PureComponent {
+export class Notifications extends React.PureComponent {
+    componentDidMount() {
+        const { fetchNotifications } = this.props;
+        fetchNotifications();
+    }
+
     render() {
         const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer, markNotificationAsRead } = this.props;
         return (
@@ -53,6 +60,7 @@ Notifications.propTypes = {
     handleDisplayDrawer: PropTypes.func,
     handleHideDrawer: PropTypes.func,
     markNotificationAsRead: PropTypes.func,
+    fetchNotifications: PropTypes.func,
 };
 
 Notifications.defaultProps = {
@@ -61,6 +69,21 @@ Notifications.defaultProps = {
     handleDisplayDrawer: () => {},
     handleHideDrawer: () => {},
     markNotificationAsRead: () => {},
+    fetchNotifications: () => {},
 }
 
-export default Notifications;
+export const mapStateToProps = (state) => {
+    const notifications = state.notifications.get('notifications');
+
+    if (!notifications) {
+        return { listNotifications: [] };
+    }
+
+    if (typeof notifications.valueSeq === 'function') {
+        return { listNotifications: notifications.valueSeq().toArray() };
+    }
+
+    return { listNotifications: Object.values(notifications) };
+};
+
+export default connect(mapStateToProps, { fetchNotifications })(Notifications);
