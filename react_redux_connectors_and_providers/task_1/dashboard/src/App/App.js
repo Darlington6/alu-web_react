@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -22,7 +23,6 @@ class App extends React.Component {
     super(props);
     const htmlObj = getLatestNotification();
     this.state = {
-      displayDrawer: false,
       user: defaultUser,
       logOut: this.logOut.bind(this),
       listNotifications: [
@@ -32,8 +32,6 @@ class App extends React.Component {
       ],
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
@@ -51,14 +49,6 @@ class App extends React.Component {
       alert('Logging you out');
       this.state.logOut();
     }
-  }
-
-  handleDisplayDrawer() {
-    this.setState({ displayDrawer: true });
-  }
-
-  handleHideDrawer() {
-    this.setState({ displayDrawer: false });
   }
 
   logIn(email, password) {
@@ -140,6 +130,20 @@ export const mapStateToProps = (state) => ({
   isLoggedIn: state.uiReducer.isUserLoggedIn,
   displayDrawer: state.uiReducer.isNotificationDrawerVisible
 });
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  displayDrawer: PropTypes.bool,
+  displayNotificationDrawer: PropTypes.func,
+  hideNotificationDrawer: PropTypes.func
+};
+
+App.defaultProps = {
+  isLoggedIn: false,
+  displayDrawer: false,
+  displayNotificationDrawer: () => {},
+  hideNotificationDrawer: () => {}
+};
 
 export default hot(
   module
