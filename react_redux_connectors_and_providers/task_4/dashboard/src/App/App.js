@@ -111,8 +111,8 @@ export class App extends React.Component {
 }
 
 export const mapStateToProps = (state) => ({
-  isLoggedIn: state.uiReducer.isUserLoggedIn,
-  displayDrawer: state.uiReducer.isNotificationDrawerVisible
+  isLoggedIn: state.ui.isUserLoggedIn,
+  displayDrawer: state.ui.isNotificationDrawerVisible
 });
 
 App.propTypes = {

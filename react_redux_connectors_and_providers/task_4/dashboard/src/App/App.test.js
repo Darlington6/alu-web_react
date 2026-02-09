@@ -75,7 +75,7 @@ describe('mapStateToProps', () => {
             isNotificationDrawerVisible: true
         });
 
-        expect(mapStateToProps({ uiReducer: state })).toEqual({
+        expect(mapStateToProps({ ui: state })).toEqual({
             isLoggedIn: true,
             displayDrawer: true
         });

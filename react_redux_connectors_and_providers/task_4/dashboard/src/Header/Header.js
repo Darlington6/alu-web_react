@@ -27,7 +27,7 @@ export class Header extends React.Component {
 }
 
 export const mapStateToProps = (state) => ({
-    user: state.uiReducer.user
+    user: state.ui.user
 });
 
 Header.propTypes = {

@@ -18,7 +18,7 @@ export function Footer({ user }) {
 }
 
 export const mapStateToProps = (state) => ({
-    user: state.uiReducer.user
+    user: state.ui.user
 });
 
 Footer.propTypes = {
