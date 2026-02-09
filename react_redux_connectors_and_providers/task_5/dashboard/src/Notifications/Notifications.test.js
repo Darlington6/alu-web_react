@@ -18,6 +18,16 @@ describe('<Notifications />', () => {
         expect(wrapper).toHaveLength(1);
     });
 
+    it('calls fetchNotifications when mounted', () => {
+        const fetchNotificationsMock = jest.fn();
+        const wrapper = shallow(
+            <Notifications fetchNotifications={ fetchNotificationsMock } />
+        );
+
+        wrapper.instance().componentDidMount();
+        expect(fetchNotificationsMock).toHaveBeenCalled();
+    });
+
     it('does display the menuItem when displayDrawer is false', () => {
         const wrapper = shallow(<Notifications displayDrawer={ false } />);
         expect(wrapper.find('.menuItem')).toHaveLength(1);

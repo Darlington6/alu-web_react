@@ -3,6 +3,7 @@ import {
   FETCH_NOTIFICATIONS_SUCCESS,
   MARK_AS_READ,
   SET_TYPE_FILTER,
+  SET_LOADING_STATE,
   NotificationTypeFilters
 } from '../actions/notificationActionTypes';
 
@@ -25,6 +26,7 @@ describe('notificationReducer', () => {
 
     expect(result.toJS()).toEqual({
       filter: 'DEFAULT',
+      loading: false,
       notifications: {
         1: { id: 1, isRead: false, type: 'default', value: 'New course available' },
         2: { id: 2, isRead: false, type: 'urgent', value: 'New resume available' },
@@ -43,6 +45,7 @@ describe('notificationReducer', () => {
 
     expect(result.toJS()).toEqual({
       filter: 'DEFAULT',
+      loading: false,
       notifications: {
         1: { id: 1, isRead: false, type: 'default', value: 'New course available' },
         2: { id: 2, isRead: true, type: 'urgent', value: 'New resume available' },
@@ -64,11 +67,25 @@ describe('notificationReducer', () => {
 
     expect(result.toJS()).toEqual({
       filter: 'URGENT',
+      loading: false,
       notifications: {
         1: { id: 1, isRead: false, type: 'default', value: 'New course available' },
         2: { id: 2, isRead: false, type: 'urgent', value: 'New resume available' },
         3: { id: 3, isRead: false, type: 'urgent', value: 'New data available' }
       }
+    });
+  });
+
+  it('sets the loading state', () => {
+    const result = notificationReducer(undefined, {
+      type: SET_LOADING_STATE,
+      loading: true
+    });
+
+    expect(result.toJS()).toEqual({
+      filter: 'DEFAULT',
+      loading: true,
+      notifications: {}
     });
   });
 });
