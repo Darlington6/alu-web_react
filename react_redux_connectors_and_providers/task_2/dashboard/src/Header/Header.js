@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/uiActionCreators';
 
-class Header extends React.Component {
+export class Header extends React.Component {
     render() {
         const { user, logout } = this.props;
         return (

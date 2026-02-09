@@ -19,7 +19,7 @@ import {
   loginRequest
 } from '../actions/uiActionCreators';
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     const htmlObj = getLatestNotification();

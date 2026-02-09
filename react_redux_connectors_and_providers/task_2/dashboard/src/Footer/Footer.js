@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-function Footer({ user }) {
+export function Footer({ user }) {
     return (
         <div className="App-footer">
             <p>Copyright { getFullYear() } - { getFooterCopy(true) }</p>

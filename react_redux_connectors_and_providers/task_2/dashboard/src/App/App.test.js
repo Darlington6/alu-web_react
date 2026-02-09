@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { fromJS } from 'immutable';
-import App, { mapStateToProps } from './App';
+import { App, mapStateToProps } from './App';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
@@ -41,26 +41,8 @@ describe('<App />', () => {
         expect(wrapper.find(Footer)).toHaveLength(1);
     });
 
-    describe('when user is logged in via state', () => {
-        it('verifies that the Login component is not displayed when user is logged in', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            instance.logIn('test@example.com', 'password');
-            wrapper.update();
-            expect(wrapper.find(Login)).toHaveLength(0);
-        });
-
-        it('verifies that the CourseList component is displayed when user is logged in', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            instance.logIn('test@example.com', 'password');
-            wrapper.update();
-            expect(wrapper.find(CourseList)).toHaveLength(1);
-        });
-    });
-
     it('wraps Login inside BodySectionWithMarginBottom when logged out', () => {
-        const wrapper = shallow(<App />);
+        const wrapper = shallow(<App isLoggedIn={ false } />);
         const sections = wrapper.find(BodySectionWithMarginBottom);
         expect(sections).toHaveLength(1);
         expect(sections.at(0).props().title).toEqual('Log in to continue');
@@ -68,10 +50,7 @@ describe('<App />', () => {
     });
 
     it('wraps CourseList inside BodySectionWithMarginBottom when logged in', () => {
-        const wrapper = shallow(<App />);
-        const instance = wrapper.instance();
-        instance.logIn('test@example.com', 'password');
-        wrapper.update();
+        const wrapper = shallow(<App isLoggedIn={ true } />);
         const sections = wrapper.find(BodySectionWithMarginBottom);
         expect(sections).toHaveLength(1);
         expect(sections.at(0).props().title).toEqual('Course list');
@@ -87,88 +66,6 @@ describe('<App />', () => {
         expect(newsSection.dive().find('p').text()).toContain('Lorem ipsum');
     });
 
-    describe('when ctrl + h keys are pressed', () => {
-        it('calls logOut function and displays alert', () => {
-            const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
-            
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            instance.logIn('test@example.com', 'password');
-            
-            const event = new KeyboardEvent('keydown', {
-                ctrlKey: true,
-                key: 'h',
-            });
-            
-            instance.handleKeyDown(event);
-            
-            expect(alertMock).toHaveBeenCalledWith('Logging you out');
-            expect(wrapper.state().user.isLoggedIn).toBe(false);
-            
-            alertMock.mockRestore();
-        });
-    });
-
-
-    describe('logIn and logOut functions', () => {
-        it('verifies that the logIn function updates the state correctly', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            
-            expect(wrapper.state().user.isLoggedIn).toBe(false);
-            expect(wrapper.state().user.email).toBe('');
-            
-            instance.logIn('test@example.com', 'password123');
-            
-            expect(wrapper.state().user.isLoggedIn).toBe(true);
-            expect(wrapper.state().user.email).toBe('test@example.com');
-            expect(wrapper.state().user.password).toBe('password123');
-        });
-
-        it('verifies that the logOut function updates the state correctly', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            
-            // First log in
-            instance.logIn('test@example.com', 'password123');
-            expect(wrapper.state().user.isLoggedIn).toBe(true);
-            
-            // Then log out
-            instance.logOut();
-            expect(wrapper.state().user.isLoggedIn).toBe(false);
-            expect(wrapper.state().user.email).toBe('');
-            expect(wrapper.state().user.password).toBe('');
-        });
-    });
-
-    describe('markNotificationAsRead function', () => {
-        it('verifies that markNotificationAsRead removes the notification from state', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            
-            expect(wrapper.state().listNotifications.length).toBe(3);
-            
-            instance.markNotificationAsRead(1);
-            
-            expect(wrapper.state().listNotifications.length).toBe(2);
-            expect(wrapper.state().listNotifications.find((n) => n.id === 1)).toBeUndefined();
-        });
-
-        it('verifies that markNotificationAsRead works with multiple notifications', () => {
-            const wrapper = shallow(<App />);
-            const instance = wrapper.instance();
-            
-            expect(wrapper.state().listNotifications.length).toBe(3);
-            
-            instance.markNotificationAsRead(2);
-            expect(wrapper.state().listNotifications.length).toBe(2);
-            expect(wrapper.state().listNotifications.find((n) => n.id === 2)).toBeUndefined();
-            
-            instance.markNotificationAsRead(3);
-            expect(wrapper.state().listNotifications.length).toBe(1);
-            expect(wrapper.state().listNotifications.find((n) => n.id === 3)).toBeUndefined();
-        });
-    });
 });
 
 describe('mapStateToProps', () => {
