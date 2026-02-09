@@ -109,14 +109,6 @@ describe('<App />', () => {
         });
     });
 
-    it('verifies that default displayDrawer state is false and can be toggled', () => {
-        const wrapper = shallow(<App />);
-        expect(wrapper.state().displayDrawer).toBe(false);
-        wrapper.instance().handleDisplayDrawer();
-        expect(wrapper.state().displayDrawer).toBe(true);
-        wrapper.instance().handleHideDrawer();
-        expect(wrapper.state().displayDrawer).toBe(false);
-    });
 
     describe('logIn and logOut functions', () => {
         it('verifies that the logIn function updates the state correctly', () => {
@@ -182,11 +174,13 @@ describe('<App />', () => {
 describe('mapStateToProps', () => {
     it('returns the correct object from state', () => {
         const state = fromJS({
-            isUserLoggedIn: true
+            isUserLoggedIn: true,
+            isNotificationDrawerVisible: true
         });
 
         expect(mapStateToProps({ uiReducer: state })).toEqual({
-            isLoggedIn: true
+            isLoggedIn: true,
+            displayDrawer: true
         });
     });
 });
