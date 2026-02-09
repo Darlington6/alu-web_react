@@ -11,7 +11,6 @@ import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import { getLatestNotification } from '../utils/utils';
 import AppContext, { defaultUser, defaultLogOut } from './AppContext';
 import {
   displayNotificationDrawer,
@@ -22,17 +21,10 @@ import {
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    const htmlObj = getLatestNotification();
     this.state = {
-      user: defaultUser,
-      listNotifications: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New course available' },
-        { id: 3, type: 'urgent', html: htmlObj },
-      ],
+      user: defaultUser
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
   componentDidMount() {
@@ -50,16 +42,8 @@ export class App extends React.Component {
     }
   }
 
-  markNotificationAsRead(id) {
-    this.setState({
-      listNotifications: this.state.listNotifications.filter(
-        (notification) => notification.id !== id
-      ),
-    });
-  }
-
   render() {
-    const { user, listNotifications } = this.state;
+    const { user } = this.state;
     const {
       isLoggedIn,
       displayDrawer,
@@ -83,10 +67,8 @@ export class App extends React.Component {
         <>
           <Notifications 
             displayDrawer={ displayDrawer } 
-            listNotifications={ listNotifications }
             handleDisplayDrawer={ displayNotificationDrawer }
             handleHideDrawer={ hideNotificationDrawer }
-            markNotificationAsRead={ this.markNotificationAsRead }
           />
           <div className="App">
             <Header />

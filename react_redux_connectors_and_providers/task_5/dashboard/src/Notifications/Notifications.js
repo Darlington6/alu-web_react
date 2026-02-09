@@ -3,7 +3,6 @@ import './Notifications.css';
 import close_icon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
-import NotificationItemShape from './NotificationItemShape';
 import { connect } from 'react-redux';
 import { fetchNotifications } from '../actions/notificationActionCreators';
 
@@ -56,7 +55,7 @@ export class Notifications extends React.PureComponent {
 
 Notifications.propTypes = {
     displayDrawer: PropTypes.bool,
-    listNotifications: PropTypes.arrayOf(NotificationItemShape),
+    listNotifications: PropTypes.array,
     handleDisplayDrawer: PropTypes.func,
     handleHideDrawer: PropTypes.func,
     markNotificationAsRead: PropTypes.func,
