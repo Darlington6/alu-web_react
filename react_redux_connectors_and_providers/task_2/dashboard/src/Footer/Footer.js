@@ -1,24 +1,35 @@
 import './Footer.css';
 import { getFullYear, getFooterCopy } from '../utils/utils';
 import React from 'react';
-import AppContext from '../App/AppContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-function Footer() {
+function Footer({ user }) {
     return (
-        <AppContext.Consumer>
-            { (context) => (
-                <div className="App-footer">
-                    <p>Copyright { getFullYear() } - { getFooterCopy(true) }</p>
-                    { context.user.isLoggedIn && (
-                        <p>
-                            <a href="#contact">Contact us</a>
-                        </p>
-                    ) }
-                </div>
+        <div className="App-footer">
+            <p>Copyright { getFullYear() } - { getFooterCopy(true) }</p>
+            { user.isLoggedIn && (
+                <p>
+                    <a href="#contact">Contact us</a>
+                </p>
             ) }
-        </AppContext.Consumer>
+        </div>
     );
 }
 
-export default Footer;
+export const mapStateToProps = (state) => ({
+    user: state.uiReducer.user
+});
+
+Footer.propTypes = {
+    user: PropTypes.shape({
+        isLoggedIn: PropTypes.bool
+    })
+};
+
+Footer.defaultProps = {
+    user: { isLoggedIn: false }
+};
+
+export default connect(mapStateToProps)(Footer);
 
