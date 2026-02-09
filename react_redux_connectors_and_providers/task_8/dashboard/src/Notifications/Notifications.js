@@ -4,7 +4,12 @@ import close_icon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchNotifications, markAsAread } from '../actions/notificationActionCreators';
+import {
+    fetchNotifications,
+    markAsAread,
+    setNotificationFilter
+} from '../actions/notificationActionCreators';
+import { NotificationTypeFilters } from '../actions/notificationActionTypes';
 import { getUnreadNotificationsByType } from '../selectors/notificationSelector';
 
 export class Notifications extends React.PureComponent {
@@ -14,7 +19,14 @@ export class Notifications extends React.PureComponent {
     }
 
     render() {
-        const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer, markNotificationAsRead } = this.props;
+        const {
+            displayDrawer,
+            listNotifications,
+            handleDisplayDrawer,
+            handleHideDrawer,
+            markNotificationAsRead,
+            setNotificationFilter
+        } = this.props;
         return (
             <>
             <div className="menuItem" onClick={ handleDisplayDrawer }>
@@ -33,6 +45,18 @@ export class Notifications extends React.PureComponent {
                             />
                         </button>
                         <p>Here is the list of notifications</p>
+                        <div className="notificationFilter">
+                            <button
+                                type="button"
+                                aria-label="Filter urgent"
+                                onClick={ () => setNotificationFilter(NotificationTypeFilters.URGENT) }
+                            >‼️</button>
+                            <button
+                                type="button"
+                                aria-label="Filter default"
+                                onClick={ () => setNotificationFilter(NotificationTypeFilters.DEFAULT) }
+                            >💠</button>
+                        </div>
                         <ul>
                             { listNotifications.map((notification) => (
                                 <NotificationItem
@@ -61,6 +85,7 @@ Notifications.propTypes = {
     handleHideDrawer: PropTypes.func,
     markNotificationAsRead: PropTypes.func,
     fetchNotifications: PropTypes.func,
+    setNotificationFilter: PropTypes.func,
 };
 
 Notifications.defaultProps = {
@@ -70,6 +95,7 @@ Notifications.defaultProps = {
     handleHideDrawer: () => {},
     markNotificationAsRead: () => {},
     fetchNotifications: () => {},
+    setNotificationFilter: () => {},
 }
 
 export const mapStateToProps = (state) => {
@@ -84,5 +110,6 @@ export const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     fetchNotifications,
-    markNotificationAsRead: markAsAread
+    markNotificationAsRead: markAsAread,
+    setNotificationFilter
 })(Notifications);
