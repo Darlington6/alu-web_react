@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { Notifications } from './Notifications';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils/utils';
+import { NotificationTypeFilters } from '../actions/notificationActionTypes';
 
 const htmlObj = getLatestNotification();
 
@@ -101,5 +102,33 @@ describe('<Notifications />', () => {
         const wrapper = shallow(<Notifications displayDrawer={ true } handleHideDrawer={ handleHideDrawerMock } listNotifications={ listNotifications } />);
         wrapper.find('button').simulate('click');
         expect(handleHideDrawerMock).toHaveBeenCalled();
+    });
+
+    it('clicking on urgent button calls setNotificationFilter with URGENT', () => {
+        const setNotificationFilterMock = jest.fn();
+        const wrapper = shallow(
+            <Notifications
+                displayDrawer={ true }
+                listNotifications={ listNotifications }
+                setNotificationFilter={ setNotificationFilterMock }
+            />
+        );
+
+        wrapper.find('.notificationFilter button').at(0).simulate('click');
+        expect(setNotificationFilterMock).toHaveBeenCalledWith(NotificationTypeFilters.URGENT);
+    });
+
+    it('clicking on default button calls setNotificationFilter with DEFAULT', () => {
+        const setNotificationFilterMock = jest.fn();
+        const wrapper = shallow(
+            <Notifications
+                displayDrawer={ true }
+                listNotifications={ listNotifications }
+                setNotificationFilter={ setNotificationFilterMock }
+            />
+        );
+
+        wrapper.find('.notificationFilter button').at(1).simulate('click');
+        expect(setNotificationFilterMock).toHaveBeenCalledWith(NotificationTypeFilters.DEFAULT);
     });
 });
