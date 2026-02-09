@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './CourseList.css';
 
 const rowStyle = { backgroundColor: '#f5f5f5ab' };
 const headerRowStyle = { backgroundColor: '#deb5b545' };
 
-function CourseListRow({ isHeader, textFirstCell, textSecondCell }) {
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = (event) => {
-        setIsChecked(event.target.checked);
-    };
+function CourseListRow({ isHeader, textFirstCell, textSecondCell, id, isChecked, onChangeRow }) {
 
     let rowClass = '';
     let appliedStyle = isHeader ? headerRowStyle : rowStyle;
@@ -38,7 +33,7 @@ function CourseListRow({ isHeader, textFirstCell, textSecondCell }) {
                             <input 
                                 type="checkbox" 
                                 checked={ isChecked } 
-                                onChange={ handleCheckboxChange }
+                                onChange={ (event) => onChangeRow(id, event.target.checked) }
                             />
                             { textFirstCell }
                         </td>
@@ -57,12 +52,18 @@ CourseListRow.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    isChecked: PropTypes.bool,
+    onChangeRow: PropTypes.func,
 };
 
 CourseListRow.defaultProps = {
     isHeader: false,
     textFirstCell: "Holberton",
     textSecondCell: null,
+    id: null,
+    isChecked: false,
+    onChangeRow: () => {},
 };
 
 export default CourseListRow;
