@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import { fromJS } from 'immutable';
+import App, { mapStateToProps } from './App';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
@@ -174,6 +175,18 @@ describe('<App />', () => {
             instance.markNotificationAsRead(3);
             expect(wrapper.state().listNotifications.length).toBe(1);
             expect(wrapper.state().listNotifications.find((n) => n.id === 3)).toBeUndefined();
+        });
+    });
+});
+
+describe('mapStateToProps', () => {
+    it('returns the correct object from state', () => {
+        const state = fromJS({
+            isUserLoggedIn: true
+        });
+
+        expect(mapStateToProps({ uiReducer: state })).toEqual({
+            isLoggedIn: true
         });
     });
 });
