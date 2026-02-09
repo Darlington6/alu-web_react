@@ -1,13 +1,13 @@
 import logo from '../assets/holberton-logo.jpg';
 import './Header.css';
 import React from 'react';
-import AppContext from '../App/AppContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/uiActionCreators';
 
 class Header extends React.Component {
-    static contextType = AppContext;
-
     render() {
-        const { user, logOut } = this.context;
+        const { user, logout } = this.props;
         return (
             <>
                 <div className="App-header">
@@ -17,7 +17,7 @@ class Header extends React.Component {
                 { user.isLoggedIn && (
                     <section id="logoutSection">
                         Welcome <strong>{ user.email }</strong> (
-                        <a onClick={ logOut } href="#logout">logout</a>
+                        <a onClick={ logout } href="#logout">logout</a>
                         )
                     </section>
                 ) }
@@ -26,4 +26,21 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+export const mapStateToProps = (state) => ({
+    user: state.uiReducer.user
+});
+
+Header.propTypes = {
+    user: PropTypes.shape({
+        isLoggedIn: PropTypes.bool,
+        email: PropTypes.string
+    }),
+    logout: PropTypes.func
+};
+
+Header.defaultProps = {
+    user: { isLoggedIn: false, email: '' },
+    logout: () => {}
+};
+
+export default connect(mapStateToProps, { logout })(Header);
